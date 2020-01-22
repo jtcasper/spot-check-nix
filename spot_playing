@@ -1,0 +1,6 @@
+#!/bin/sh
+dbus-send --print-reply=literal --session \
+--dest=org.mpris.MediaPlayer2.spotify \
+/org/mpris/MediaPlayer2 \
+org.freedesktop.DBus.Properties.Get string:'org.mpris.MediaPlayer2.Player' string:'PlaybackStatus' \
+| awk 'END { if (NR == 0) { exit 1 } } { exit $2 != "Playing" }' # 0 (success exit code) means playing
